@@ -22,14 +22,14 @@ end
 
 Util.write_welcome_message
 
-filepath = Util.get_relative_filepath
+filepath = Util.read_relative_filepath
 puts 'Analyzing HTML files.'.colorize(:green)
 
 active_css_classes = {}
 
 Dir.glob("#{filepath}/**/**").each do |f|
   next unless f =~ /\.html$/
-  puts f
+
   active_css_classes.deep_merge!(Util.parse_html_file(f))
 end
 

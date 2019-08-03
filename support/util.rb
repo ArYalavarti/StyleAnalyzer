@@ -3,20 +3,15 @@
 # Util module for helper functions
 module Util
   def self.write_welcome_message
-    msg = "Welcome to \u{1F680} StyleAnalyzer \u{1F680}, a HTML/CSS"\
-          ' static-analyzer'
-
-    puts(('-' * (msg.length + 4)).colorize(:blue))
-    puts(" #{msg}".colorize(:blue))
-    puts(('-' * (msg.length + 4)).colorize(:blue))
+    puts(('-' * (Constants::WELCOME_MSG.length + 4)).colorize(:blue))
+    puts(" #{Constants::WELCOME_MSG}".colorize(:blue))
+    puts(('-' * (Constants::WELCOME_MSG.length + 4)).colorize(:blue))
 
     puts "\n\n"
   end
 
-  def self.get_relative_filepath
-    puts 'Enter the relative filepath to the root directory of the'\
-          ' project you want to analyze. Ex: \'../../dev/UI\''
-
+  def self.read_relative_filepath
+    puts Constants::FILEPATH_MSG
     gets.chomp
   end
 
@@ -29,7 +24,7 @@ module Util
   def self.depth_search(node:, css_classes:)
     node.children.each do |child|
       unless child.attributes.empty?
-        check_css_attributes(attr: ["id", "class"],
+        check_css_attributes(attr: Constants::VALID_ATTRIBUTES,
                              css_classes: css_classes,
                              child: child)
       end
