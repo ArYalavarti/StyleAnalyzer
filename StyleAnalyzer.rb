@@ -8,6 +8,7 @@ require 'pry'
 require 'ruby-progressbar'
 require 'nokogiri'
 require 'active_support/all'
+require 'css_parser'
 
 %w[
   models
@@ -25,12 +26,24 @@ Util.write_welcome_message
 filepath = Util.read_relative_filepath
 puts 'Analyzing HTML files.'.colorize(:green)
 
-active_css_classes = {}
+active_css_classes      = {}
+implemented_css_classes = {}
 
 Dir.glob("#{filepath}/**/**").each do |f|
-  next unless f =~ /\.html$/
+  if f =~ /\.html$/
+    active_css_classes.deep_merge!(
+      Util.parse_html_file(file_path: f)
+    )
+    next
+  end
 
-  active_css_classes.deep_merge!(Util.parse_html_file(f))
+  next unless f =~ /\.css$/
+  #next if Util.skip_css_file(file: f)
+
+  implemented_css_classes.deep_merge!(
+    Util.parse_css_file(file_path: f)
+  )
 end
 
-puts active_css_classes
+Util.print_unused_css_classes(active: active_css_classes,
+                              implemented: implemented_css_classes)
