@@ -1,25 +1,14 @@
 #!/usr/bin/ruby
 # frozen_string_literal: true
 
-require 'csv'
-require 'colorize'
-require 'titleize'
-require 'pry'
-require 'ruby-progressbar'
 require 'nokogiri'
-require 'active_support/all'
+require 'colorize'
 require 'css_parser'
+require 'pry'
+require 'active_support/all'
 
-%w[
-  models
-  support
-].each do |dir|
-  Dir.open(dir).each do |file_name|
-    next unless file_name =~ /\.rb$/
-
-    require_relative "#{dir}/#{file_name}"
-  end
-end
+require_relative "support/constants.rb"
+require_relative "support/util.rb"
 
 Util.write_welcome_message
 
