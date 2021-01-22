@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module Constants
-  WELCOME_MSG  = "Welcome to \u{1F680} StyleAnalyzer \u{1F680}, a HTML/CSS"\
-          ' static-analyzer'
+  WELCOME_MSG  = "Welcome to StyleAnalyzer, a static analyzer for web development projects"
 
   FILEPATH_MSG = "\nEnter the" + ' relative filepath '.colorize(:blue) +
                  'to the root directory of '\
