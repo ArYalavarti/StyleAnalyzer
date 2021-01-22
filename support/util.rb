@@ -10,7 +10,7 @@ module Util
 
   def self.read_relative_filepath
     puts Constants::FILEPATH_MSG
-    gets.chomp
+    ask "> "
   end
 
   def self.skip_css_file(file:)
@@ -18,8 +18,7 @@ module Util
     puts('Type ' + 'SKIP'.colorize(:blue) +
              ' to skip parsing this CSS file. Press ' +
              'ENTER'.colorize(:blue) + ' otherwise.')
-
-    gets.chomp == 'SKIP'
+    (ask "> ").chomp == 'SKIP'
   end
 
   def self.parse_html_file(file_path:)

@@ -6,13 +6,20 @@ require 'colorize'
 require 'css_parser'
 require 'pry'
 require 'active_support/all'
+require "highline/import"
+require 'readline'
 
 require_relative "support/constants.rb"
 require_relative "support/util.rb"
 
 Util.write_welcome_message
 
-filepath = Util.read_relative_filepath
+begin
+  filepath = Util.read_relative_filepath
+  abort('Empty Input: Exiting script') if filepath.nil? || filepath.empty?
+rescue EOFError => e
+  abort("EOF: Exiting script")
+end
 puts 'Analyzing HTML files.'.colorize(:green)
 
 active_css_classes      = {}
@@ -27,7 +34,7 @@ Dir.glob("#{filepath}/**/**").each do |f|
   end
 
   next unless f =~ /\.css$/
-  #next if Util.skip_css_file(file: f)
+  next if Util.skip_css_file(file: f)
 
   implemented_css_classes.deep_merge!(
     Util.parse_css_file(file_path: f)
